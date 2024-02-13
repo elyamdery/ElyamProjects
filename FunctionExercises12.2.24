@@ -1,0 +1,159 @@
+# Exercise 1 - summery of even numbers
+def sum_even_numbers(numbers):
+    summery_even = 0
+    for num in numbers:
+        if num % 2 == 0:
+            summery_even += num
+    return summery_even
+
+# Exercise 2 - capitalize strings
+def uppercase_strings(strings):
+    capitalizestr = []
+    for string in strings:
+        capitalizestr.append(string.upper())
+    return capitalizestr
+
+# Exercise 3 - swap keys values (dict)
+def swap_keys_values(dict):
+    swapped_dict = {
+        value: key for key, value in dict.items()
+    }
+    return swapped_dict
+
+#exercise 4 - unique values return (unique)
+def unique_numbers(input_list):
+    unique_values = set(input_list)
+    return unique_values
+
+
+#exercise 5 - return shortest string of the list
+def shortest_string(strings):
+    if not strings:
+        return None
+    shortest = strings[0]
+    for string in strings:
+        if len(string) < len(shortest):
+            shortest = string
+    return shortest
+
+#exercise 6 -
+def sort_lists_descending(dict):
+    sorted_dict = {}
+    for key, value_list in dict.items():
+        sorted_dict[key] = sorted(value_list, reverse=True)
+    return sorted_dict
+
+# """exercise 7"""
+def strings_containing_a(strings):
+    return [string for string in strings if "a" in string.lower()]
+
+
+#exercise 8 - Returns the key and value with the highest value from the input dictionary.
+def key_with_highest_value(dict):
+    if not dict:
+        return None
+    highest_value = float('-inf')
+    highest_key = None
+
+    for key, value in dict.items():
+        if value > highest_value:
+            highest_value = value
+            highest_key = key
+
+        return highest_key, highest_value
+
+
+#Exercise 9 - palindromes
+def palindromes(strings):
+    palindromes_list = []
+    for string in strings:
+        if string.lower() == string.lower()[::-1]:
+            palindromes_list.append(string)
+    return palindromes_list
+
+#exercise 10 - keys with odd values
+def keys_with_odd_values(dict):
+  filtered_dict = {}
+  for key, value in dict.items():
+    if value % 2 != 0:
+      filtered_dict[key] = value
+  return filtered_dict
+
+
+#main function - part 2
+
+#menu
+def display_menu():
+    print("Select an option:")
+    print("1. Sum of even numbers")
+    print("2. Uppercase list of strings")
+    print("3. Swap dict keys and values")
+    print("4. Unique numbers in list")
+    print("5. Shortest string in a list")
+    print("6. Sort lists in descending order")
+    print("7. Strings in list containing 'a'")
+    print("8. Dict key with highest value")
+    print("9. Palindromes from a list of words")
+    print("0. Exit")
+
+#invalid input
+def handle_invalid_input():
+    print("Invalid input! Please enter a valid option.")
+
+# Main function
+def main():
+    while True:
+        print("Select an option:")
+        print("1. Sum of even numbers")
+        print("2. Uppercase list of strings")
+        print("3. Swap dict keys and values")
+        print("4. Unique numbers in list")
+        print("5. Shortest string in a list")
+        print("6. Sort lists in descending order")
+        print("7. Strings in list containing 'a'")
+        print("8. Dict key with highest value")
+        print("9. Palindromes from a list of words")
+        print("10. Dict keys with odd values")
+        print("0. Exit")
+
+        choice = input("Enter your choice: ")
+
+        if choice == '0':
+            print("Exiting the program.")
+            break
+        elif choice == '1':
+            numbers = [int(x) for x in input("Enter a list of numbers separated by spaces: ").split()]
+            print("Result:", sum_even_numbers(numbers))
+        elif choice == '2':
+            strings = input("Enter a list of strings separated by spaces: ").split()
+            print("Result:", uppercase_strings(strings))
+        elif choice == '3':
+            dictionary = eval(input("Enter a dictionary: "))  # Example input: {'a': 1, 'b': 2, 'c': 3}
+            print("Result:", swap_keys_values(dictionary))
+        elif choice == '4':
+            numbers = [int(x) for x in input("Enter a list of numbers separated by spaces: ").split()]
+            print("Result:", unique_numbers(numbers))
+        elif choice == '5':
+            strings = input("Enter a list of strings separated by spaces: ").split()
+            print("Result:", shortest_string(strings))
+        elif choice == '6':
+            dictionary = eval(input("Enter a dictionary: "))  # Example input: {'a': [3, 2, 1], 'b': [5, 4]}
+            print("Result:", sort_lists_descending(dictionary))
+        elif choice == '7':
+            strings = input("Enter a list of strings separated by spaces: ").split()
+            print("Result:", strings_containing_a(strings))
+        elif choice == '8':
+            dictionary = eval(input("Enter a dictionary: "))  # Example input: {'a': 10, 'b': 5, 'c': 8}
+            print("Result:", key_with_highest_value(dictionary))
+        elif choice == '9':
+            strings = input("Enter a list of strings separated by spaces: ").split()
+            print("Result:", palindromes(strings))
+        elif choice == '10':
+            dictionary = eval(input("Enter a dictionary: "))  # Example input: {'a': 10, 'b': 5, 'c': 8}
+            print("Result:", keys_with_odd_values(dictionary))
+        else:
+            print("Invalid input! Please enter a valid option.")
+
+
+if __name__ == "__main__":
+    main()
