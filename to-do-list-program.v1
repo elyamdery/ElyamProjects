@@ -1,0 +1,101 @@
+# read the list of tasks from a file and return it as a list
+# handle errors that occure when reading from a file
+# it should use ast.literal_eval()
+import ast
+import os.path
+
+def read_tasks(filename, user_name):
+  full_filename = f"{user_name}_tasks.txt"
+  try:
+    with open(full_filename, 'r') as file:
+      tasks = ast.literal_eval(file.read())
+      return tasks
+  except (FileNotFoundError, PermissionError) as e:
+    print(f"Error reading file: {e}")
+    return None
+  except (ValueError, SyntaxError) as e:
+    print(f"Invalid file format: {e}")
+    return None
+
+# function which write the list of tasks to a file
+# check if the file already exists and append to it if it does or create a new file if it does not
+def write_tasks(filename, tasks, user_name):
+  full_filename = f"{user_name}_tasks.txt"
+
+  # Check if the file exists, and create it if necessary
+  if not os.path.exists(full_filename):
+    print(f"Creating new task file for {user_name}")
+    with open(full_filename, 'w') as file:
+      pass  # Initialize the file (create it)
+
+  try:
+    with open(full_filename, 'a') as file:
+      string_tasks = [str(task) for task in tasks]
+      file.write("[" + ",".join(string_tasks) + "]\n")
+      print(f"Tasks saved to {full_filename}")
+  except (PermissionError, OSError) as e:
+    print(f"Error writing to file: {e}")
+
+# function which allow the user to add a task to the to-do-list
+# while loop need to be included to keep promoting the user untill they decide to exit.
+# parameter that represents the list of tasks
+
+def add_task(tasks):
+    while True:
+        new_task = input("Enter a task to add (or 'q' to quit)")
+        if new_task.lower() == 'q':
+            break
+        #empty input and potential errors:
+        if not new_task.strip():
+            print("Invalid input: Task cannot be empty.")
+            continue
+        #add the task to the list
+        tasks.append(new_task)
+        print(f"Task '{new_task}' added to your list !")
+    print("Done adding tasks.")
+
+#the function will display the list of tasks to the user
+#handle the case when there are no tasks in the list (display it)
+
+def display_tasks(tasks):
+    if not tasks:
+        print("You dont have any tasks in your list")
+    else:
+        print("Your tasks:")
+        for i, task in enumerate(tasks, start=1):
+            print(f"{i}. {task}")
+
+#this function will server as a waiting list with inputs for the user to interact
+#it will be able top use all of the 4 functions in harmony giving the user the option to use it
+
+def main():
+    user_name = input("Enter your name or ID: ")
+# Load from file if exists -
+    tasks = read_tasks("tasks.txt", {user_name}) or []
+    if not tasks:
+        print(f"Welcome, {user_name} ! Creating a new task list for you.")
+
+# Welcome message with a loop -
+    print("Welcome to your task manager!")
+    while True:
+        print("\nMenu:")
+        print("1. Add a task")
+        print("2. View tasks")
+        print("3. Quit")
+
+        choice = input("Enter your choice (1/2/3): ")
+
+        if choice == "1":
+          add_task(tasks)
+        elif choice == "2":
+            display_tasks(tasks)
+        elif choice == "3":
+            write_tasks("tasks.txt", tasks, user_name)
+            break
+        else:
+            print("Invalid choice. Please try again.")
+
+    print("Tasks saved. Exiting...""\n")
+
+if __name__ == "__main__":
+    main()
